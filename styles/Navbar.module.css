@@ -1,0 +1,13 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #1677ff;
+    color: white;
+}
+.UserName{
+    display: flex;
+    align-items: center;
+        gap: 10px;
+}

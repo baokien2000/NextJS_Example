@@ -1,0 +1,49 @@
+.LoginPage{
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(241deg, rgba(105,170,228,1) 0%, rgba(236,58,248,1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+}
+.loginForm{
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px 30px;
+    padding-bottom: 20px;
+
+}
+.loginForm h1{
+    text-align: left;
+    padding-bottom: 20px;
+}
+.loginForm button{
+    width: 100%;
+    border-radius: 50px;
+    background: linear-gradient(241deg, rgba(105,170,228,1) 0%, rgba(236,58,248,1) 100%);
+    color: white;
+    font-weight: bold;
+}
+.loginForm button:hover{
+    border: none;
+    color: white !important;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer span{
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.footer p{
+    cursor: pointer;
+}
+.footer span,.footer p{
+    color: rgba(0, 0, 0, 0.7);
+}
