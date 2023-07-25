@@ -12,7 +12,7 @@ import { getProducts, getUserInfo } from "@/redux/selector";
 import productSlice from "@/redux/slice/product";
 import { useRouter } from "next/router";
 import { auth, db } from "../firebase/config";
-import Loadding from "@/component/Loadding";
+import {Loadding} from "@/component/Loadding";
 
 export default function Home() {
     const [searchData, setSearchData] = useState<IProduct[]>([]);
@@ -50,7 +50,10 @@ export default function Home() {
                     key: doc.id,
                 }));
                 dispatch(productSlice.actions.setProducts(value));
+                setIsLoad(true)
+
             });
+
             return unSubcribe;
         }
     }, [userInfo]);
@@ -68,7 +71,6 @@ export default function Home() {
                     uid: user.uid,
                 };
                 dispatch(productSlice.actions.setUserInfo(userInfo));
-                setIsLoad(true)
             }
         });
 

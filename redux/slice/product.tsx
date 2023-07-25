@@ -43,7 +43,7 @@ const productSlice = createSlice({
             state.products = action.payload;
         },
         setSelectedProducts: (state, action) => {
-            state.selectedProducts = state.products.find((item) => item.id === action.payload);
+            state.selectedProducts = action.payload;
         },
         setUserInfo: (state, action) => {
             state.user = action.payload;

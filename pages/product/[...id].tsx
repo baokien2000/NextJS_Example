@@ -17,6 +17,7 @@ import styles from "@/styles/Product.module.css";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
+import  { TableLoadding } from "@/component/Loadding";
 const ProductDetails = () => {
     const router = useRouter();
     const userInfo = useSelector(getUserInfo);
@@ -24,16 +25,19 @@ const ProductDetails = () => {
     const dispatch = useDispatch();
     const selectedProducts = useSelector(getSelectedProducts);
     router.query?.id && console.log("router.query?.id[0]", router.query?.id[0]);
+    const [loading, setIsLoad] = useState(false);
     useEffect(() => {
         if (router.query?.id) {
             dispatch(productSlice.actions.setSelectedProducts(router.query?.id[0]));
+            console.log("Im runing");
         }
     }, [router.query?.id]);
 
     useEffect(() => {
         if (router.query?.id && userInfo?.uid) {
             let conlectionRef = db.collection("products").orderBy("createdAt");
-
+            console.log("router.query?.id[0]", router.query?.id[0]);
+            console.log(" userInfo?.uid", userInfo?.uid);
             conlectionRef = conlectionRef
                 .where("id", "==", router.query?.id[0])
                 .where("createdBy", "==", userInfo?.uid);
@@ -43,12 +47,14 @@ const ProductDetails = () => {
                     id: doc.id,
                     key: doc.id,
                 }));
-
-                dispatch(productSlice.actions.setProducts(value));
+                console.log("value", value);
+                console.log("value[0]", value[0]);
+                dispatch(productSlice.actions.setSelectedProducts(value[0]));
+                setIsLoad(true);
             });
             return unSubcribe;
         }
-    }, [router.query?.id, userInfo?.uid]);
+    }, [router.query?.id, userInfo]);
 
     useEffect(() => {
         const authChange = auth.onAuthStateChanged((user) => {
@@ -69,42 +75,50 @@ const ProductDetails = () => {
 
         return authChange;
     }, []);
-    const src = `https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-purple-1.jpg`;
-    const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
+    console.log("selectedProducts", selectedProducts);
     return (
         <div>
             <Head>
                 <title>Product Details</title>
             </Head>
             <Navbar />
-            {selectedProducts ? (
-                <div className={styles.ProductDetails + " ProductDetails"}>
-                    <Card title="Product Detail" extra={<Link href="/">Back to products list</Link>} style={{ width: 500 }}>
-                    <div className={styles.DetailsTable}>
-                        <span>ID</span>
-                        <span>{selectedProducts.id}</span>
-                        <span>Name</span>
-                        <span>{selectedProducts.name}</span>
-                        <span>Price</span>
-                        <span>{selectedProducts.price}</span>
-                        <span>Rate</span>
-                        <span>{selectedProducts.rate}</span>
-                        <span>Type</span>
-                        <span>{selectedProducts.type}</span>
-                        <span>Create At</span>
-                        <span>
-                            {dayjs(new Date(selectedProducts.createdAt.seconds * 1000)).format("DD/MM/YYYY h:mm:ss A")}
-                        </span>
+            {loading ? (
+                selectedProducts ? (
+                    <div className={styles.ProductDetails + " ProductDetails"}>
+                        <Card
+                            title="Product Detail"
+                            extra={<Link href="/">Back to products list</Link>}
+                            style={{ width: 500 }}
+                        >
+                            <div className={styles.DetailsTable}>
+                                <span>ID</span>
+                                <span>{selectedProducts.id}</span>
+                                <span>Name</span>
+                                <span>{selectedProducts.name}</span>
+                                <span>Price</span>
+                                <span>{selectedProducts.price}</span>
+                                <span>Rate</span>
+                                <span>{selectedProducts.rate}</span>
+                                <span>Type</span>
+                                <span>{selectedProducts.type}</span>
+                                <span>Create At</span>
+                                <span>
+                                    {dayjs(new Date(selectedProducts.createdAt?.seconds * 1000)).format(
+                                        "DD/MM/YYYY h:mm:ss A"
+                                    )}
+                                </span>
+                            </div>
+                        </Card>
                     </div>
-                    </Card>
-                   
-                </div>
+                ) : (
+                    <div className={styles.NotFound}>
+                        <h1>404</h1>
+                        <span>PageNot Found</span>
+                    </div>
+                )
             ) : (
-                <div className={styles.NotFound}>
-                    <h1>404</h1>
-                    <span>PageNot Found</span>
-                </div>
+                <TableLoadding />
             )}
         </div>
     );
