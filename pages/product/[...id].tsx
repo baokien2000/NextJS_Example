@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import Head from "next/head";
-import Navbar from '@/component/navbar';
-import { getSelectedProducts } from '@/redux/selector';
-import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
-import { Input, Button } from "antd";
+import Navbar from "@/component/navbar";
+import { getSelectedProducts } from "@/redux/selector";
+import { SearchOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { Input, Button, Card, Rate } from "antd";
 import ProductList from "@/component/productList";
-import {  useState, KeyboardEvent } from "react";
+import { useState, KeyboardEvent } from "react";
 import { IProduct } from "@/interface";
 import { DeleteModel, ProductModel } from "@/component/productModel";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,29 +14,30 @@ import productSlice from "@/redux/slice/product";
 import { useRouter } from "next/router";
 import { auth, db } from "../../firebase/config";
 import styles from "@/styles/Product.module.css";
-import dayjs from 'dayjs';
-
+import dayjs from "dayjs";
+import Image from "next/image";
+import Link from "next/link";
 const ProductDetails = () => {
     const router = useRouter();
     const userInfo = useSelector(getUserInfo);
     const products = useSelector(getProducts);
     const dispatch = useDispatch();
-    const selectedProducts = useSelector(getSelectedProducts)
-    router.query?.id && console.log("router.query?.id[0]",router.query?.id[0]);
+    const selectedProducts = useSelector(getSelectedProducts);
+    router.query?.id && console.log("router.query?.id[0]", router.query?.id[0]);
     useEffect(() => {
         if (router.query?.id) {
-            dispatch(productSlice.actions.setSelectedProducts(router.query?.id[0]))
+            dispatch(productSlice.actions.setSelectedProducts(router.query?.id[0]));
         }
     }, [router.query?.id]);
-
 
     useEffect(() => {
         if (router.query?.id && userInfo?.uid) {
             let conlectionRef = db.collection("products").orderBy("createdAt");
 
-            conlectionRef = conlectionRef.where("id", "==", router.query?.id[0]).where("createdBy","==",userInfo?.uid);
+            conlectionRef = conlectionRef
+                .where("id", "==", router.query?.id[0])
+                .where("createdBy", "==", userInfo?.uid);
             const unSubcribe = conlectionRef.onSnapshot((snapshot) => {
-
                 const value = snapshot.docs.map((doc) => ({
                     ...doc.data(),
                     id: doc.id,
@@ -47,8 +48,8 @@ const ProductDetails = () => {
             });
             return unSubcribe;
         }
-    }, [router.query?.id,userInfo?.uid]);
-    
+    }, [router.query?.id, userInfo?.uid]);
+
     useEffect(() => {
         const authChange = auth.onAuthStateChanged((user) => {
             if (user === null) {
@@ -68,16 +69,18 @@ const ProductDetails = () => {
 
         return authChange;
     }, []);
+    const src = `https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-purple-1.jpg`;
+    const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
     return (
-         <div>
+        <div>
             <Head>
                 <title>Product Details</title>
             </Head>
             <Navbar />
-            {selectedProducts ?
-                <div className={styles.ProductDetails }>
-                    <h1>Product Details</h1>
+            {selectedProducts ? (
+                <div className={styles.ProductDetails + " ProductDetails"}>
+                    <Card title="Product Detail" extra={<Link href="/">Back to products list</Link>} style={{ width: 500 }}>
                     <div className={styles.DetailsTable}>
                         <span>ID</span>
                         <span>{selectedProducts.id}</span>
@@ -90,17 +93,19 @@ const ProductDetails = () => {
                         <span>Type</span>
                         <span>{selectedProducts.type}</span>
                         <span>Create At</span>
-                        <span>{dayjs(new Date(selectedProducts.createdAt.seconds*1000)).format("DD/MM/YYYY h:mm:ss A")}</span>
+                        <span>
+                            {dayjs(new Date(selectedProducts.createdAt.seconds * 1000)).format("DD/MM/YYYY h:mm:ss A")}
+                        </span>
                     </div>
+                    </Card>
+                   
                 </div>
-                : <div className={styles.NotFound}>
+            ) : (
+                <div className={styles.NotFound}>
                     <h1>404</h1>
-                    <span>
-                    PageNot Found 
-                    </span>
-                        
+                    <span>PageNot Found</span>
                 </div>
-            }
+            )}
         </div>
     );
 };

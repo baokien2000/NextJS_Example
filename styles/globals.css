@@ -252,3 +252,7 @@ td .anticon:hover{
 .Delete .DeleteBtn:not(:disabled):hover{
   border-color: #d32f2f !important;
 }
+
+.ProductDetails .ant-card-body{
+  padding: 0 !important;
+}
