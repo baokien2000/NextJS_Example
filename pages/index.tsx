@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import Navbar from "@/component/navbar";
 import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
-import { Input, Button } from "antd";
+import { Input, Button, Spin } from "antd";
 import ProductList from "@/component/productList";
 import { useEffect, useState, KeyboardEvent } from "react";
 import { IProduct } from "@/interface";
@@ -12,6 +12,7 @@ import { getProducts, getUserInfo } from "@/redux/selector";
 import productSlice from "@/redux/slice/product";
 import { useRouter } from "next/router";
 import { auth, db } from "../firebase/config";
+import Loadding from "@/component/Loadding";
 
 export default function Home() {
     const [searchData, setSearchData] = useState<IProduct[]>([]);
@@ -22,7 +23,7 @@ export default function Home() {
     const userInfo = useSelector(getUserInfo);
     const products = useSelector(getProducts);
     const dispatch = useDispatch();
-
+    const [loading,setIsLoad] = useState(false)
     useEffect(() => {
         setSearchData(products);
     }, [products]);
@@ -67,17 +68,16 @@ export default function Home() {
                     uid: user.uid,
                 };
                 dispatch(productSlice.actions.setUserInfo(userInfo));
+                setIsLoad(true)
             }
         });
 
         return authChange;
     }, []);
 
-    // const userInfo = {...user.providerData[0],userId: user.uid}
-    // dispatch(productSlice.actions.setUserInfo(userInfo))
 
     return (
-        <>
+        loading ? <>
             <Head>
                 <title>Example App</title>
             </Head>
@@ -104,6 +104,6 @@ export default function Home() {
             </main>
           <ProductModel data={selectedProduct} />
           <DeleteModel data={selectedProduct}  />
-        </>
+        </> : <Loadding/>
     );
 }
