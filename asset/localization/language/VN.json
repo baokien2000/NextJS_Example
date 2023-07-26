@@ -1,6 +1,7 @@
 {
     "VN":"Tiếng Việt",
     "EN":"Tiếng Anh",
+
     "Name":"Tên",
     "Type":"Loại",
     "Price":"Giá",
@@ -10,43 +11,47 @@
     "Search": "Tìm kiếm",
     "Update": "Cập nhật",
     "Create": "Tạo mới",
+    "Cancel":"Hủy",
+    "Delete":"Xóa",
+
     "Product": "Sản phẩm",
     "product": "sản phẩm",
     "ProductDetails":"Chi tiết sản phẩm",
     "BackToProductsList":"Quay lại danh sách sản phẩm",
-    "Cancel":"Hủy",
-    "Delete":"Xóa",
+
 
     "Password":"Mật khẩu",
     "ConfirmPassword":"Xác nhận mật khẩu ",
     "PasswordNotMatch":"Mật khẩu không khớp",
-    "ErrorToast": "Đã xảy ra lổi. Vui lòng thử lại sau.",
+
     "SuccessToast": "Thành công",
     "YesImSure": "Có, tôi chắc chắn",
     "SeeYouBackSoon":"Hy vọng gặp lại bạn sớm",
     "SureToLogout":"Bạn có chắc chắn bạn muốn thoát?",
+
+    "ErrorToast": "Đã xảy ra lổi. Vui lòng thử lại sau.",
     "NameEmptyError": "Vui lòng nhập tên sản phẩm!",
     "TypeEmptyError":"Vui lòng nhập loại sản phẩm!",
     "PriceEmptyError":"Vui lòng nhập giá sản phẩm!",
     "RateEmptyError":"Vui lòng nhập đánh giá sản phẩm!",
-
     "EmailEmptyError": "Vui lòng nhập email của bạn!",
     "EmailInValidError": "Email không hợp lệ!",
     "EmailIsExisted": "Email đã tồn tại!",
     "PassEmptyError": "Vui lòng nhập mật khẩu của bạn!",
     "ConfirmPassEmptyError": "Vui lòng nhập mật khẩu xác nhận của bạn!",
+    "EmailorPassError":"Email hoặc mật khẩu không đúng!",
 
     "DeleteThisProduct": "Bạn muốn xóa sản phẩm này?",
     "DeleteProductSuccess": "Xóa sản phẩm thành công",
     "DeleteWarning": "Làm như vậy sẽ xóa vĩnh viễn sản phẩm này!",
     "DeleteConfirm":"Xác nhận rằng bạn muốn xóa sản phẩm này bằng cách nhập tên sản phẩm:",
-    "EmailorPassError":"Email hoặc mật khẩu không đúng!",
+
     "SignIn":"Đăng nhập",
     "SignUp":"Đăng ký",
     "GGSingIn": "Đăng nhập với Google",
-
     "OrSignUpUsing":"Hoặc đăng ký bằng",
     "AlreadlyUser":"Đã có tài khoản?",
+    
     "NameAtLeastChar":"Tên của bạn phải có ít nhất 3 ký tự!",
     "NameAtMostChar": "Tên của bạn phải có ít nhất 20 ký tự!",
     "PassAtLeastChar":"Mật khẩu của bạn phải có ít nhất 6 ký tự!",

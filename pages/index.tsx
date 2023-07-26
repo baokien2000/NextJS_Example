@@ -1,6 +1,5 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import Navbar from "@/component/navbar";
 import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import { Input, Button, Spin } from "antd";
 import ProductList from "@/component/productList";
@@ -8,7 +7,7 @@ import { useEffect, useState, KeyboardEvent } from "react";
 import { IProduct } from "@/interface";
 import { DeleteModel, ProductModel } from "@/component/productModel";
 import { useSelector, useDispatch } from "react-redux";
-import { getLanguage, getProducts, getUserInfo } from "@/redux/selector";
+import { getProducts, getUserInfo } from "@/redux/selector";
 import productSlice from "@/redux/slice/product";
 import { useRouter } from "next/router";
 import { auth, db } from "../firebase/config";
@@ -46,16 +45,10 @@ export default function Home() {
 
             conlectionRef = conlectionRef.where("createdBy", "==", userInfo.uid);
             const unSubcribe = conlectionRef.onSnapshot((snapshot) => {
-                const value = snapshot.docs.map((doc) => ({
-                    ...doc.data(),
-                    // id: doc.id,
-                    // key: doc.id,
-                }));
+                const value = snapshot.docs.map((doc) => (doc.data()));
                 dispatch(productSlice.actions.setProducts(value));
                 setIsLoad(true)
-
             });
-
             return unSubcribe;
         }
     }, [userInfo]);
@@ -84,7 +77,6 @@ export default function Home() {
             <Head>
                 <title>Example App</title>
             </Head>
-            {/* <Navbar /> */}
 
             <main className={styles.main}>
                 <div className={styles.search}>

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Search from "antd/es/input/Search";
+import React from "react";
 import { Table } from "antd";
 import styles from "@/styles/Home.module.css";
 import { IProduct } from "@/interface";
 import { EditOutlined ,DeleteOutlined,EyeOutlined} from "@ant-design/icons";
 import productSlice from "@/redux/slice/product";
-import {useDispatch,useSelector } from "react-redux";
-import { getProducts } from "@/redux/selector";
+import {useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
@@ -60,7 +58,6 @@ const ProductList = (props: Prop) => {
             key: "rate",
         },
         {
-            // dayjs(new Date()).format("DD/MM/YYYY h:mm:ss A")
             title: t("CreatedAt"),
             dataIndex: "createdAt",
             key: "createdAt",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "@/styles/Login.module.css";
 import { Button, Input, Form } from "antd";
 import Link from "next/link";
@@ -6,7 +6,6 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import productSlice from "@/redux/slice/product";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 
@@ -44,7 +43,6 @@ const SignUp = () => {
                 <Form form={form} onFinish={handleFinish}>
                     <Form.Item
                         label={t("Name")}
-                        // style={{ marginBottom: "10px" }}
                         name={"name"}
                         rules={[
                             { required: true, message: t('Name') },
@@ -57,7 +55,6 @@ const SignUp = () => {
                     </Form.Item>
                     <Form.Item
                         label="Email"
-                        // style={{ marginBottom: "10px" }}
                         name="email"
                         rules={[
                             { required: true, message: t("EmailEmptyError") },
@@ -67,7 +64,6 @@ const SignUp = () => {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        // style={{ marginBottom: "10px" }}
                         rules={[
                             { required: true, message: t("PassEmptyError") },
                             { min: 6, message: t("PassAtLeastChar")},
@@ -79,7 +75,6 @@ const SignUp = () => {
                         <Input.Password />
                     </Form.Item>
                     <Form.Item
-                        // style={{ marginBottom: "15px" }}
                         rules={[
                             { required: true, message: t("ConfirmPassEmptyError") },
                             { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])/, message: t("PassIncludeSpecialChar") },

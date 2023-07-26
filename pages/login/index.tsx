@@ -17,7 +17,6 @@ import { useTranslation } from "react-i18next";
 const Login = () => {
     const dispatch = useDispatch() 
     const router = useRouter()
-    const [form] = Form.useForm()
     const selectedLanguage = useSelector(getLanguage)  
     const { t } = useTranslation();
 
@@ -39,23 +38,9 @@ const Login = () => {
 
     const handleGGLogin =  () => {
         const ggProvider = new firebase.auth.GoogleAuthProvider()
-        auth.signInWithPopup(ggProvider).then((result) => {
-        }).catch((error) => {
-            // toast.error(t(ErrorToast)
-            console.log(error);
-        })
-
-    //     const userInfo = {
-    // email: string;
-    // phoneNumber: string;
-    // photoURL: string;
-    // providerId: string;
-    // uid: string;
-    //     }
+        auth.signInWithPopup(ggProvider).then().catch((error) => {console.log(error)})
     }
-    useEffect(() => {
-        console.log("render");
-    },[selectedLanguage])
+
     useEffect(() => {
         const authChange = auth.onAuthStateChanged((user) => {
             if (user === null) {
@@ -75,7 +60,7 @@ const Login = () => {
         });
 
         return authChange;
-    }, []);
+    }, [dispatch, router]);
     
     return (
         <div className={styles.LoginPage + " Login"}>

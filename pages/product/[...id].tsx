@@ -1,29 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
+import { getLanguage, getSelectedProducts,getProducts, getUserInfo  } from "@/redux/selector";
+import styles from "@/styles/Product.module.css";
 import Head from "next/head";
-import Navbar from "@/component/navbar";
-import { getLanguage, getSelectedProducts } from "@/redux/selector";
-import { SearchOutlined, ArrowLeftOutlined } from "@ant-design/icons";
-import { Input, Button, Card, Rate } from "antd";
-import ProductList from "@/component/productList";
-import { useState, KeyboardEvent } from "react";
-import { IProduct } from "@/interface";
-import { DeleteModel, ProductModel } from "@/component/productModel";
+import Link from "next/link";
+import { Card } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts, getUserInfo } from "@/redux/selector";
 import productSlice from "@/redux/slice/product";
 import { useRouter } from "next/router";
 import { auth, db } from "../../firebase/config";
-import styles from "@/styles/Product.module.css";
 import dayjs from "dayjs";
-import Image from "next/image";
-import Link from "next/link";
 import  { TableLoadding } from "@/component/Loadding";
 import { useTranslation } from "react-i18next";
 
 const ProductDetails = () => {
     const router = useRouter();
     const userInfo = useSelector(getUserInfo);
-    const products = useSelector(getProducts);
     const dispatch = useDispatch();
     const selectedProducts = useSelector(getSelectedProducts);
     const [loading, setIsLoad] = useState(false);
@@ -33,7 +24,7 @@ const ProductDetails = () => {
         if (router.query?.id) {
             dispatch(productSlice.actions.setSelectedProducts(router.query?.id[0]));
         }
-    }, [router.query?.id]);
+    }, [router.query?.id,dispatch]);
 
     useEffect(() => {
         if (router.query?.id && userInfo?.uid) {
@@ -52,7 +43,7 @@ const ProductDetails = () => {
             });
             return unSubcribe;
         }
-    }, [router.query?.id, userInfo,selectedLanguage]);
+    }, [router.query?.id, userInfo,selectedLanguage,dispatch]);
 
     useEffect(() => {
         const authChange = auth.onAuthStateChanged((user) => {
@@ -72,7 +63,7 @@ const ProductDetails = () => {
         });
 
         return authChange;
-    }, []);
+    }, [dispatch,router]);
 
     return (
         <div>

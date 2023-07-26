@@ -4,7 +4,7 @@ import { IProduct } from "@/interface";
 import { useSelector, useDispatch } from "react-redux";
 import productSlice from "@/redux/slice/product";
 import dayjs from "dayjs";
-import { getIsModelDeleteOpen, getIsModelOpen, getProducts, getUserInfo } from "@/redux/selector";
+import { getIsModelDeleteOpen, getIsModelOpen, getUserInfo } from "@/redux/selector";
 import firebase, { db, auth } from "../firebase/config";
 import { doc, updateDoc,deleteDoc,setDoc } from "firebase/firestore";
 import { PoweroffOutlined } from "@ant-design/icons"
@@ -18,7 +18,6 @@ interface Prop {
 }
 export const ProductModel = (props: Prop) => {
 
-    const [isLoad, setIsLoad] = useState(false);
     const {t} = useTranslation()
     const [form] = Form.useForm();
     const { data } = props;
