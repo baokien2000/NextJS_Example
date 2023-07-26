@@ -11,7 +11,6 @@ import { useRouter } from 'next/router'
 import { toast } from "react-toastify";
 import { ILogin } from "@/interface";
 import {GoogleOutlined} from "@ant-design/icons"
-import { error } from "console";
 const Login = () => {
     const dispatch = useDispatch() 
     const router = useRouter()

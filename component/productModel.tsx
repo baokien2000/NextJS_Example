@@ -6,7 +6,7 @@ import productSlice from "@/redux/slice/product";
 import dayjs from "dayjs";
 import { getIsModelDeleteOpen, getIsModelOpen, getProducts, getUserInfo } from "@/redux/selector";
 import firebase, { db, auth } from "../firebase/config";
-import { doc, updateDoc,deleteDoc} from "firebase/firestore";
+import { doc, updateDoc,deleteDoc,setDoc } from "firebase/firestore";
 import { PoweroffOutlined } from "@ant-design/icons"
 import { signOut } from "firebase/auth";
 import { useRouter } from 'next/router'
@@ -58,15 +58,18 @@ export const ProductModel = (props: Prop) => {
             const updateRef = doc(db, "products", updatedProduct.id);
             updateDoc(updateRef, updatedProduct);
         } else {
+            const ref = db.collection("products").doc();
+            const productID = ref.id;
             const addItem = {
                 ...form.getFieldsValue(),
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            };
-            db.collection("products").add({
-                ...addItem,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 createdBy: userInfo?.uid,
-            });
+                id: productID,
+                key: productID
+            };
+            setDoc(ref, addItem)
+
+
         }
         dispatch(productSlice.actions.setIsModelOpen(false));
     };
@@ -193,6 +196,8 @@ export const DeleteModel = (props: IDelete) => {
     const handleCancel = () => {
         dispatch(productSlice.actions.setIsModelDeleteOpen(false))
     }
+    console.log("props.data?.id",props.data?.id);
+    console.log("data",props.data);
     const handleDelete = () => {
         if (props.data?.id) {
             deleteDoc(doc(db, "products", props.data.id)).then(() => {
@@ -204,14 +209,6 @@ export const DeleteModel = (props: IDelete) => {
                 toast.error("An error occurred. Please try again later.");
             })
         }
-       
-        // signOut(auth).then(() => {
-        //     router.push("/login").then(() => {
-        //         dispatch(productSlice.actions.setProducts([]))
-        //     })
-        // }).catch((error) => {
-        //     toast.error("An error occurred. Please try again later.");
-        // });
     }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setConfirmText(e.target.value)

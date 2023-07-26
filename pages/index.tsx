@@ -46,8 +46,8 @@ export default function Home() {
             const unSubcribe = conlectionRef.onSnapshot((snapshot) => {
                 const value = snapshot.docs.map((doc) => ({
                     ...doc.data(),
-                    id: doc.id,
-                    key: doc.id,
+                    // id: doc.id,
+                    // key: doc.id,
                 }));
                 dispatch(productSlice.actions.setProducts(value));
                 setIsLoad(true)

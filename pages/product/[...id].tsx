@@ -24,20 +24,16 @@ const ProductDetails = () => {
     const products = useSelector(getProducts);
     const dispatch = useDispatch();
     const selectedProducts = useSelector(getSelectedProducts);
-    router.query?.id && console.log("router.query?.id[0]", router.query?.id[0]);
     const [loading, setIsLoad] = useState(false);
     useEffect(() => {
         if (router.query?.id) {
             dispatch(productSlice.actions.setSelectedProducts(router.query?.id[0]));
-            console.log("Im runing");
         }
     }, [router.query?.id]);
 
     useEffect(() => {
         if (router.query?.id && userInfo?.uid) {
             let conlectionRef = db.collection("products").orderBy("createdAt");
-            console.log("router.query?.id[0]", router.query?.id[0]);
-            console.log(" userInfo?.uid", userInfo?.uid);
             conlectionRef = conlectionRef
                 .where("id", "==", router.query?.id[0])
                 .where("createdBy", "==", userInfo?.uid);
@@ -47,8 +43,6 @@ const ProductDetails = () => {
                     id: doc.id,
                     key: doc.id,
                 }));
-                console.log("value", value);
-                console.log("value[0]", value[0]);
                 dispatch(productSlice.actions.setSelectedProducts(value[0]));
                 setIsLoad(true);
             });
@@ -76,7 +70,6 @@ const ProductDetails = () => {
         return authChange;
     }, []);
 
-    console.log("selectedProducts", selectedProducts);
     return (
         <div>
             <Head>
