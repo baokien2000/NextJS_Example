@@ -29,7 +29,6 @@ const Navbar = () => {
         i18n.changeLanguage(value)
 
     };
-    console.log("render");
     return (
         <div className={styles.navbar}>
             <Link href={"/"}>
@@ -40,7 +39,7 @@ const Navbar = () => {
                     className="LanguageSelect"
                     defaultValue="vi"
                     value={selectedLanguage}
-                    dropdownMatchSelectWidth={false}
+                    popupMatchSelectWidth={false}
 
                     onChange={handleLanguageChange}
                     suffixIcon  ={<GlobalOutlined style={{ fontSize: "18px" }} />}
