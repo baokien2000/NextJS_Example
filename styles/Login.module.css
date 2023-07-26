@@ -1,6 +1,9 @@
 .LoginPage{
+    position: absolute;
+    top: 0;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     background: linear-gradient(241deg, rgba(105,170,228,1) 0%, rgba(236,58,248,1) 100%);
     display: flex;
     justify-content: center;
@@ -26,6 +29,7 @@
     background: linear-gradient(241deg, rgba(105,170,228,1) 0%, rgba(236,58,248,1) 100%);
     color: white;
     font-weight: bold;
+    margin: 10px 0;
 }
 .loginForm button:hover{
     border: none;

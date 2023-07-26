@@ -9,6 +9,8 @@ import {useDispatch,useSelector } from "react-redux";
 import { getProducts } from "@/redux/selector";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
+
 interface Prop {
     setSelectedProduct: (data: IProduct | undefined) => void
     searchProduct: IProduct[] ,
@@ -29,6 +31,8 @@ const ProductList = (props: Prop) => {
     const handleView = (id: string) => {
         router.push("/product/[...id]", `/product/${id}`)
     }
+    const { t } = useTranslation();
+
     const columns = [
         {
             title: "id",
@@ -36,28 +40,28 @@ const ProductList = (props: Prop) => {
             key: "id",
         },
         {
-            title: "Name",
+            title: t("Name"),
             dataIndex: "name",
             key: "name",
         },
         {
-            title: "Type",
+            title: t("Type"),
             dataIndex: "type",
             key: "type",
         },
         {
-            title: "Price",
+            title: t("Price"),
             dataIndex: "price",
             key: "price",
         },
         {
-            title: "Rate",
+            title: t("Rate"),
             dataIndex: "rate",
             key: "rate",
         },
         {
             // dayjs(new Date()).format("DD/MM/YYYY h:mm:ss A")
-            title: "Created At",
+            title: t("CreatedAt"),
             dataIndex: "createdAt",
             key: "createdAt",
             render: (_: any, record: IProduct) => (
@@ -65,7 +69,7 @@ const ProductList = (props: Prop) => {
             ),
         },
         {
-            title: "Action",
+            title: t("Action"),
             dataIndex: "Action",
             key: "Action",
             render: (_: any, record: IProduct) => (

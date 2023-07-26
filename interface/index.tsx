@@ -15,7 +15,8 @@ export interface IProductSlice {
     products: IProduct[],
     selectedProducts: IProduct| undefined ,
     isModelOpen: boolean,
-    isModelDeleteOpen: boolean
+    isModelDeleteOpen: boolean,
+    language: string,
 }
 
 export interface IUser {

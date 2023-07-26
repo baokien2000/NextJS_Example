@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Button, Input, Modal, Form, Space } from "antd";
 import { IProduct } from "@/interface";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ import { PoweroffOutlined } from "@ant-design/icons"
 import { signOut } from "firebase/auth";
 import { useRouter } from 'next/router'
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface Prop {
     data: IProduct | undefined;
@@ -18,7 +19,7 @@ interface Prop {
 export const ProductModel = (props: Prop) => {
 
     const [isLoad, setIsLoad] = useState(false);
-
+    const {t} = useTranslation()
     const [form] = Form.useForm();
     const { data } = props;
     const dispatch = useDispatch();
@@ -80,7 +81,7 @@ export const ProductModel = (props: Prop) => {
     
     return (
         <Modal
-            title={(data ? "Update" : "Create") + " Product"}
+            title={(data ? t("Update") : t("Create")) +" " + t("product")}
             open={isModelOpen}
             onCancel={handleCancel}
             footer={null}
@@ -93,45 +94,45 @@ export const ProductModel = (props: Prop) => {
                     </Form.Item>
                 )}
                 <Form.Item
-                    label="Name"
+                    label={t("Name")}
                     name={"name"}
-                    rules={[{ required: true, message: "Please input product name!" }]}
+                    rules={[{ required: true, message: t("NameEmptyError") }]}
                 >
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label="Type"
+                    label={t("Type")}
                     name={"type"}
-                    rules={[{ required: true, message: "Please input product type!" }]}
+                    rules={[{ required: true, message: t("TypeEmptyError") }]}
                 >
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label="Price"
+                    label={t("Price")}
                     name={"price"}
-                    rules={[{ required: true, message: "Please input product price!" }]}
+                    rules={[{ required: true, message: t("PriceEmptyError") }]}
                 >
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label="Rate"
+                    label={t("Rate")}
                     name={"rate"}
-                    rules={[{ required: true, message: "Please input product rate!" }]}
+                    rules={[{ required: true, message: t("RateEmptyError") }]}
                 >
                     <Input />
                 </Form.Item>
                 {data && (
-                    <Form.Item label="Created At" name={"createdAt"}>
+                    <Form.Item label={t("CreatedAt")} name={"createdAt"}>
                         <Input readOnly />
                     </Form.Item>
                 )}
                 <Form.Item>
                     <Space align="end">
                         <Button htmlType="button" onClick={handleCancel}>
-                            Cancel
+                            {t("Cancel")}
                         </Button>
                         <Button type="primary" htmlType="submit">
-                            {data ? "Update" : "Create"}
+                            {data ? t("Update") : t("Create")}
                         </Button>
                     </Space>
                 </Form.Item>
@@ -153,13 +154,15 @@ export const LogoutModel = (props : ILogout) => {
     const handleCancel = () => {
         setIsModelOpen(false)
     }
+    const {t} = useTranslation()
     const handleLogout = () => {
         signOut(auth).then(() => {
+            setIsModelOpen(false)
             router.push("/login").then(() => {
                 dispatch(productSlice.actions.setProducts([]))
             })
         }).catch((error) => {
-            toast.error("An error occurred. Please try again later.");
+            toast.error(t("ErrorToast"));
         });
     }
     return <Modal
@@ -167,8 +170,8 @@ export const LogoutModel = (props : ILogout) => {
     onCancel={handleCancel}
         footer={
             < >
-                <Button className="LogoutCancel" onClick={handleCancel}>Cancel</Button>
-                <Button className="LogoutBtn" onClick={handleLogout}>{"Yes, I'm Sure"}</Button>
+                <Button className="LogoutCancel" onClick={handleCancel}>{t("Cancel")}</Button>
+                <Button className="LogoutBtn" onClick={handleLogout}>{t("YesImSure")}</Button>
 
             </>
         }
@@ -178,8 +181,8 @@ export const LogoutModel = (props : ILogout) => {
             <div className="Circle">
                 <PoweroffOutlined  style={{fontSize:"35px" , color:"#1d7c8e"}}/>
             </div>
-            <p>Hope to see you back soon</p>
-            <span>Are you sure you want to logout ?</span>
+            <p>{t("SeeYouBackSoon")}</p>
+            <span>{t("SureToLogout")}</span>
         </div>
     </Modal>
 }
@@ -196,17 +199,17 @@ export const DeleteModel = (props: IDelete) => {
     const handleCancel = () => {
         dispatch(productSlice.actions.setIsModelDeleteOpen(false))
     }
-    console.log("props.data?.id",props.data?.id);
-    console.log("data",props.data);
+    const {t} = useTranslation()
+
     const handleDelete = () => {
         if (props.data?.id) {
             deleteDoc(doc(db, "products", props.data.id)).then(() => {
-                toast.success("Product has been deleted successfully")
+                toast.success(t("DeleteProductSuccess"))
                 dispatch(productSlice.actions.setIsModelDeleteOpen(false))
             })
             .catch(error => {
                 console.log(error);
-                toast.error("An error occurred. Please try again later.");
+                toast.error(t("ErrorToast"));
             })
         }
     }
@@ -218,18 +221,18 @@ export const DeleteModel = (props: IDelete) => {
         onCancel={handleCancel}
         footer={
             < >
-                <Button className="DeleteCancel" type="text" onClick={handleCancel}>Cancel</Button>
-                <Button disabled={props.data?.name !== confirtext} className="DeleteBtn" onClick={handleDelete}>Delete</Button>
+                <Button className="DeleteCancel" type="text" onClick={handleCancel}>{t("Cancel")}</Button>
+                <Button disabled={props.data?.name !== confirtext} className="DeleteBtn" onClick={handleDelete}>{t("Delete")}</Button>
             </>
         }
     className="Delete"
     >
         <div className="Container">
-            <h2>Delete this product?</h2>
-            <p>{"Doing so will permanently delete this product's data"}</p>
+            <h2>{t("DeleteThisProduct")}</h2>
+            <p>{t("DeleteWarning")}</p>
         </div>
         <div className="Confirm">
-        <span>Confirm you want to delete this product by typing its name: <b>{props.data?.name}</b></span>
+        <span>{t("DeleteConfirm")} <b>{props.data?.name}</b></span>
             <Input onChange={handleChange}></Input>
         </div>
     </Modal>

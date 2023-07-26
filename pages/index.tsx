@@ -8,11 +8,12 @@ import { useEffect, useState, KeyboardEvent } from "react";
 import { IProduct } from "@/interface";
 import { DeleteModel, ProductModel } from "@/component/productModel";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts, getUserInfo } from "@/redux/selector";
+import { getLanguage, getProducts, getUserInfo } from "@/redux/selector";
 import productSlice from "@/redux/slice/product";
 import { useRouter } from "next/router";
 import { auth, db } from "../firebase/config";
 import {Loadding} from "@/component/Loadding";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
     const [searchData, setSearchData] = useState<IProduct[]>([]);
@@ -23,7 +24,8 @@ export default function Home() {
     const userInfo = useSelector(getUserInfo);
     const products = useSelector(getProducts);
     const dispatch = useDispatch();
-    const [loading,setIsLoad] = useState(false)
+    const [loading, setIsLoad] = useState(false)
+    const { t } = useTranslation();
     useEffect(() => {
         setSearchData(products);
     }, [products]);
@@ -77,17 +79,17 @@ export default function Home() {
         return authChange;
     }, []);
 
-
     return (
         loading ? <>
             <Head>
                 <title>Example App</title>
             </Head>
-            <Navbar />
+            {/* <Navbar /> */}
+
             <main className={styles.main}>
                 <div className={styles.search}>
                     <Input
-                        placeholder="Search"
+                        placeholder={t("Search")  }
                         onChange={(e) => setSearch(e.target.value)}
                         suffix={<SearchOutlined onClick={handleSearch} />}
                         onKeyDown={handleKeyPress}

@@ -8,10 +8,14 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import productSlice from "@/redux/slice/product";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
+    const {t} = useTranslation()
+    
     const [form] = Form.useForm();
     const pass = Form.useWatch("password", form);
+    const InputName = Form.useWatch("name", form);
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -26,9 +30,9 @@ const SignUp = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 if (errorCode === "auth/email-already-in-use") {
-                    toast.error("That email address is already in use");
+                    toast.error(t("EmailIsExisted"));
                 } else {
-                    toast.error("An error occurred. Please try again later.");
+                    toast.error(t('ErrorToast'));
                 }
             });
     };
@@ -36,13 +40,18 @@ const SignUp = () => {
     return (
         <div className={styles.LoginPage + " Login"}>
             <div className={styles.loginForm}>
-                <h1>SIGN UP</h1>
+                <h1>{t("SignUp")}</h1>
                 <Form form={form} onFinish={handleFinish}>
                     <Form.Item
-                        label="Name"
+                        label={t("Name")}
                         // style={{ marginBottom: "10px" }}
                         name={"name"}
-                        rules={[{ required: true, message: "Please input your name!" }]}
+                        rules={[
+                            { required: true, message: t('Name') },
+                            { min: 3, message: t("NameAtLeastChar") },
+                            { max: 20, message: t("NameAtMostChar") },
+
+                        ]}
                     >
                         <Input />
                     </Form.Item>
@@ -51,16 +60,20 @@ const SignUp = () => {
                         // style={{ marginBottom: "10px" }}
                         name="email"
                         rules={[
-                            { required: true, message: "Please input your email!" },
-                            { type: "email", message: "Your email is not valid!" },
+                            { required: true, message: t("EmailEmptyError") },
+                            { type: "email", message: t("EmailInValidError") },
                         ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         // style={{ marginBottom: "10px" }}
-                        rules={[{ required: true, message: "Please input your password!" }]}
-                        label="Password"
+                        rules={[
+                            { required: true, message: t("PassEmptyError") },
+                            { min: 6, message: t("PassAtLeastChar")},
+                            { max: 20, message:t("PassAtMostChar") },
+                        ]}
+                        label={t("Password")}
                         name={"password"}
                     >
                         <Input.Password />
@@ -68,9 +81,10 @@ const SignUp = () => {
                     <Form.Item
                         // style={{ marginBottom: "15px" }}
                         rules={[
-                            { required: true, message: "Please input your confirm password!" },
+                            { required: true, message: t("ConfirmPassEmptyError") },
+                            { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])/, message: t("PassIncludeSpecialChar") },
                             {
-                                message: "Your password is not match!",
+                                message: t("PasswordNotMatch"),
                                 validator: (_, value) => {
                                     if (value === pass) {
                                         return Promise.resolve();
@@ -80,7 +94,7 @@ const SignUp = () => {
                                 },
                             },
                         ]}
-                        label="Confirm Password"
+                        label={t("ConfirmPassword")}
                         name={"confirmPassword"}
                     >
                         <Input.Password />
@@ -91,15 +105,15 @@ const SignUp = () => {
 
                     >
                         <Button size="large" htmlType="submit">
-                            SIGN UP
+                            {t("SignUp")}
                         </Button>
                     </Form.Item>
                 </Form>
                 <div className={styles.footer}>
                     <span>
-                        Alreadly a user?{" "}
+                        {t("AlreadlyUser")+ " "}
                         <Link href="./login" style={{ color: "#000" }}>
-                            LOGIN
+                            {t("SignIn")}
                         </Link>
                     </span>
                 </div>

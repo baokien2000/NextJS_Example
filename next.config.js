@@ -13,7 +13,7 @@ const nextConfig = {
     APPID: process.env.APPID,
     MEASUREMENTID: process.env.MEASUREMENTID,
     MESSAGINGSENDERID: process.env.MESSAGINGSENDERID,
-  }
+  },
 }
 
 module.exports = nextConfig

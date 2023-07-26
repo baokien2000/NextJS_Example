@@ -1,0 +1,58 @@
+{
+    "VN":"VietNamese",
+    "EN":"English",
+    "Name":"Name",
+    "Type":"Type",
+    "Price":"Price",
+    "Rate":"Rate",
+    "CreatedAt":"Created At",
+    "Action":"Action",
+    "Search": "Search",
+    "Update": "Update",
+    "Create": "Create",
+    "Product": "Product",
+    "product": "product",
+    "ProductDetails":"Product Details",
+    "BackToProductsList":"Back to products list",
+
+    "Password": "Password",
+    "ConfirmPassword":"Confirm Password",
+    "PasswordNotMatch":"Password does not match",
+
+    "Cancel":"Cancel",
+    "Delete":"Delete",
+    "ErrorToast": "An error occurred. Please try again later.",
+    "SuccessToast": "Success",
+    "YesImSure": "Yes, I'm sure",
+    "SeeYouBackSoon":"Hope to see you back soon",
+    "SureToLogout":"Are you sure you want to logout ?",
+    "NameEmptyError": "Please input product name!",
+    "TypeEmptyError":"Please input product type!",
+    "PriceEmptyError":"Please input product price!",
+    "RateEmptyError":"Please input product rate!",
+
+    "EmailEmptyError": "Please input your email!",
+    "PassEmptyError": "Please input your password!",
+    "ConfirmPassEmptyError": "Please input your confirm password!",
+    "EmailInValidError":"The input is not valid E-mail!",
+    "EmailIsExisted": "This email is already existed!",
+
+    "DeleteThisProduct":"Delete this product?",
+    "DeleteProductSuccess": "Product has been deleted successfully",
+    "DeleteWarning": "Doing so will permanently delete this product's data",
+    "DeleteConfirm": "Confirm you want to delete this product by typing its name:",
+    "EmailorPassError":"Email or password is incorrect",
+    "SignIn":"SIGN IN",
+    "SignUp":"SIGN UP",
+    "GGSingIn": "Sign in with Google",
+
+    "OrSignUpUsing":"Or sign up using",
+    "AlreadlyUser":"Alreadly a user?",
+    "NameAtLeastChar":"Name must be at least 3 characters!",
+    "NameAtMostChar": "Your password must be at most 20 characters!",
+    "PassAtLeastChar":"Your password must be at least 6 characters!",
+    "PassAtMostChar": "Your password must be at most 20 characters!",
+    "PassIncludeSpecialChar": "Your password must contain at least one uppercase letter, one lowercase letter and one number!"
+
+
+}

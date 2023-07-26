@@ -5,7 +5,6 @@ import 'firebase/compat/firestore';
 import "firebase/compat/database";
 import "firebase/compat/storage";
 import 'firebase/compat/analytics'
-console.log("im in");
 const firebaseConfig = {
     apiKey: process.env.APIKEY,
     authDomain: process.env.AUTHDOMAIN,
@@ -15,7 +14,6 @@ const firebaseConfig = {
     appId: process.env.APPID,
     measurementId: process.env.MEASUREMENTID,
 };
-console.log(firebaseConfig);
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
 // firebase.analytics()

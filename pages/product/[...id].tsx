@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
 import Navbar from "@/component/navbar";
-import { getSelectedProducts } from "@/redux/selector";
+import { getLanguage, getSelectedProducts } from "@/redux/selector";
 import { SearchOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import { Input, Button, Card, Rate } from "antd";
 import ProductList from "@/component/productList";
@@ -18,6 +18,8 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 import  { TableLoadding } from "@/component/Loadding";
+import { useTranslation } from "react-i18next";
+
 const ProductDetails = () => {
     const router = useRouter();
     const userInfo = useSelector(getUserInfo);
@@ -25,6 +27,8 @@ const ProductDetails = () => {
     const dispatch = useDispatch();
     const selectedProducts = useSelector(getSelectedProducts);
     const [loading, setIsLoad] = useState(false);
+    const selectedLanguage = useSelector(getLanguage);
+    const { t } = useTranslation();
     useEffect(() => {
         if (router.query?.id) {
             dispatch(productSlice.actions.setSelectedProducts(router.query?.id[0]));
@@ -48,7 +52,7 @@ const ProductDetails = () => {
             });
             return unSubcribe;
         }
-    }, [router.query?.id, userInfo]);
+    }, [router.query?.id, userInfo,selectedLanguage]);
 
     useEffect(() => {
         const authChange = auth.onAuthStateChanged((user) => {
@@ -73,29 +77,29 @@ const ProductDetails = () => {
     return (
         <div>
             <Head>
-                <title>Product Details</title>
+                <title>{t("ProductDetails")}</title>
             </Head>
-            <Navbar />
+            {/* <Navbar /> */}
             {loading ? (
                 selectedProducts ? (
                     <div className={styles.ProductDetails + " ProductDetails"}>
                         <Card
-                            title="Product Detail"
-                            extra={<Link href="/">Back to products list</Link>}
+                            title={t('ProductDetails')}
+                            extra={<Link href="/">{t("BackToProductsList")}</Link>}
                             style={{ width: 500 }}
                         >
                             <div className={styles.DetailsTable}>
                                 <span>ID</span>
                                 <span>{selectedProducts.id}</span>
-                                <span>Name</span>
+                                <span>{t("Name")}</span>
                                 <span>{selectedProducts.name}</span>
-                                <span>Price</span>
+                                <span>{t("Price")}</span>
                                 <span>{selectedProducts.price}</span>
-                                <span>Rate</span>
+                                <span>{t("Rate")}</span>
                                 <span>{selectedProducts.rate}</span>
-                                <span>Type</span>
+                                <span>{t("Type")}</span>
                                 <span>{selectedProducts.type}</span>
-                                <span>Create At</span>
+                                <span>{t("CreatedAt")}</span>
                                 <span>
                                     {dayjs(new Date(selectedProducts.createdAt?.seconds * 1000)).format(
                                         "DD/MM/YYYY h:mm:ss A"
