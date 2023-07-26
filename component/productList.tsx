@@ -35,7 +35,7 @@ const ProductList = (props: Prop) => {
 
     const columns = [
         {
-            title: "id",
+            title: "Id",
             dataIndex: "id",
             key: "id",
         },
