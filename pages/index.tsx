@@ -51,7 +51,7 @@ export default function Home() {
             });
             return unSubcribe;
         }
-    }, [userInfo]);
+    }, [userInfo,dispatch]);
     useEffect(() => {
         const authChange = auth.onAuthStateChanged((user) => {
             if (user === null) {
@@ -70,7 +70,7 @@ export default function Home() {
         });
 
         return authChange;
-    }, []);
+    }, [dispatch, router]);
 
     return (
         loading ? <>

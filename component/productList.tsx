@@ -80,7 +80,7 @@ const ProductList = (props: Prop) => {
     ];
     return (
         <div className={styles.ProductList}>
-            <Table dataSource={searchProduct} columns={columns} />;
+            <Table dataSource={searchProduct} columns={columns} />
         </div>
     );
 };

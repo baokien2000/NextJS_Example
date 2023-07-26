@@ -5,8 +5,10 @@ import store from "../redux/store";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Navbar from "@/component/navbar";
-
+import i18n from "../i18n/i18n"
+i18n.init()
 export default function App({ Component, pageProps }: AppProps) {
+  
     return (
         <Provider store={store}>
             <Navbar />
